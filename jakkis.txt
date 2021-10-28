@@ -1,0 +1,84 @@
+package com.company;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Arrays;
+import java.util.Collections;
+
+public class Main extends JFrame implements ActionListener {
+
+    JPanel panel = new JPanel();
+    JPanel resetPanel = new JPanel();
+    JButton[] button = new JButton[16];
+    JButton resetGame = new JButton("Reset Game");
+
+    public Main() {
+        panel.setLayout(new GridLayout(4, 4));
+        resetGame.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                randomizeButtons();
+            }
+        });
+        resetPanel.add(resetGame) ;
+
+
+        for (int i = 0; i < button.length; i++) {
+            button[i] = new JButton();
+            if (i != button.length - 1) {
+                button[i].setText(Integer.toString(i + 1));
+            }
+            button[i].addActionListener(this);
+            panel.add(button[i]);
+        }
+
+        randomizeButtons();
+
+        setLayout(new BorderLayout());
+        add(panel, "Center" );
+        add (resetPanel, "South") ;
+        setVisible(true);
+        setSize(420, 420);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+    }
+
+    public void randomizeButtons() {
+        Collections.shuffle(Arrays.asList(button));
+        for (JButton button : button) {
+            panel.add(button);
+        }
+        panel.revalidate();
+    }
+
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        JButton buttonPressed = new JButton();
+        JButton emptyButton = new JButton();
+        buttonPressed = (JButton) e.getSource();
+
+        for (int i = 0 ; i < button.length; i++){
+            if(button[i].equals("")) {
+                System.out.println(Arrays.asList(button));
+                emptyButton = button[i] ;
+                break ;
+            }
+        }
+
+
+
+
+
+
+
+    }
+
+
+    public static void main(String[] args) {
+        Main m = new Main();
+    }
+}
+
+
